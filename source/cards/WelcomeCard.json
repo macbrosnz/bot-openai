@@ -5,14 +5,14 @@
     "body": [
         {
             "type": "TextBlock",
-            "text": "Hello and welcome 👋",
+            "text": "Tena Koe 👋",
             "size": "ExtraLarge",
             "isSubtle": true,
             "wrap": true
         },
         {
             "type": "TextBlock",
-            "text": "Please, just talk to me or ask me a question. I will do my best to answer you.",
+            "text": "Here to Help Te Rau o Te Huia exceed Nga Paerewa Standards.",
             "size": "Medium",
             "isSubtle": true,
             "wrap": true
