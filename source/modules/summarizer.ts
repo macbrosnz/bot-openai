@@ -112,7 +112,7 @@ const queryVectorStoreAgent = async (msg: string, namespace: string,): Promise<s
     const chatmodel = new OpenAIChat({
       modelName: process.env.OPENAI_CMODEL,
       openAIApiKey: "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",
-      temperature: .5,
+      temperature: .3,
     })
     const results = await vectorStore.similaritySearch(msg, 5);
     const docstring = await docstrings(results);

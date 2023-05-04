@@ -14,7 +14,7 @@ export class OpenAiBot extends ActivityHandler {
       console.log('OpenAiBot constructor res:' + context.activity.text);
       const msg = context.activity.text
 
-      const answer = await queryVectorStoreAgent(msg, "kapae");
+      const answer = await queryVectorStoreAgent(msg, "paerewa");
       //Create data for card
       const cardData = {
         answer: answer
@@ -23,7 +23,6 @@ export class OpenAiBot extends ActivityHandler {
       const template = new ACData.Template(AnswerCard);
       const cardPayload = template.expand({ $root: cardData });
       const card = CardFactory.adaptiveCard(cardPayload);
-
       await context.sendActivity(MessageFactory.attachment(card));
       // await context.sendActivity(`You said '${context.activity.text}'`);
       await next();
