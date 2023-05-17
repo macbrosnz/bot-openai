@@ -1,8 +1,9 @@
 
 import { ChatPromptTemplate, HumanMessagePromptTemplate, PromptTemplate, SystemMessagePromptTemplate } from "langchain/prompts";
 import { OpenAI, OpenAIChat } from "langchain/llms/openai";
+
 import { LLMChain, loadSummarizationChain } from "langchain/chains";
-import { templates } from './templates';
+import { techtemplates } from './techtemplates';
 import { ZeroShotAgent, AgentExecutor } from "langchain/agents";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
@@ -16,9 +17,8 @@ import { PineconeClient } from "@pinecone-database/pinecone";
 import { ChatOpenAI } from "langchain/chat_models/openai";
 import { HumanChatMessage } from "langchain/schema";
 
-
-const str = templates.qaTemplate
-console.log(templates.qaTemplate);
+const str = techtemplates.tasks;
+console.log(techtemplates.tasks);
 
 
 const getStringsFromDocs = async(docs: any) => {
@@ -66,16 +66,8 @@ const uniquedocstrings = async (docs: any) => {
 
 const basicLLMQuery = async (msg: string): Promise<string> => {
   try {
-    const model = new ChatOpenAI({
-      openAIApiKey: "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",
-      temperature: 1,
-
-    });
-
-    const res = await model.call([new HumanChatMessage(msg)]);
-    console.log(res);
-
-    return res.text
+  ``
+    return
 
   } catch (err) {
     console.log(err);
@@ -90,7 +82,7 @@ const queryStoreAgent = async (msg: string): Promise<string> => {
 
   // Create a prompt template use to generate prompts for the summarization chain
   const chatPrompt = ChatPromptTemplate.fromPromptMessages([
-    SystemMessagePromptTemplate.fromTemplate(templates.inquiryTemplate),
+    SystemMessagePromptTemplate.fromTemplate(techtemplates.tasks),
     HumanMessagePromptTemplate.fromTemplate(`{msg} `)
   ])
 
@@ -104,14 +96,30 @@ const queryStoreAgent = async (msg: string): Promise<string> => {
     });
 
     const pineconeIndex = client.Index(process.env.PINE_INDEX);
-
+    const vectorStore = await PineconeStore.fromExistingIndex(
+      new OpenAIEmbeddings,
+      { pineconeIndex, namespace: 'langchain' },
+    );
     const chatmodel = new OpenAIChat({
       modelName: process.env.OPENAI_CMODEL,
-      openAIApiKey: "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",
+      openAIApiKey: process.env.OPENAI_KEY,
       temperature: .5,
     })
+    const results = await vectorStore.similaritySearch(msg, 5);
+    const docstring = await docstrings(results);
+    console.log('docs: ' + docstring);
+
+    const chain = new LLMChain({
+      llm:chatmodel, prompt: chatPrompt})
+
+    const res = await chain.call({
+      msg: msg,
+      summaries: docstring
+    }
       
-    return ;
+    );
+
+    return res.text;
   }
 
   catch (e) {

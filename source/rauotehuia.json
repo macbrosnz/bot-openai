@@ -1,0 +1,22 @@
+{
+    "IsEncrypted": false,
+    "Values": {
+        "FUNCTIONS_WORKER_RUNTIME": "node",
+        "AzureWebJobsStorage": "",
+        "OPENAI_API_KEY": "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",
+        "OPENAI_MODEL": "text-davinci-003",
+        "OPENAI_EMODEL": "text-embedding-ada-002",
+        "OPENAI_CMODEL": "gpt-3.5-turbo", 
+        "PINE_KEY": "cbfa56de-1c99-4f9d-89ad-e65c5edc7537",
+        "PINE_ENV": "asia-southeast1-gcp",
+        "PINE_INDEX": "rauotehuia",
+        "PINE_DIMENSION": "1536",
+        "MicrosoftAppId": "a889077a-bf82-4c87-8619-4ec8733621a4",
+        "MicrosoftAppPassword": "5dL8Q~j6Wcalwmtmxr0aCLMk4Stzrt4xv-MwGcIf",
+        "MicrosoftAppTenantId": "0be92083-70d6-4344-b8af-13a95a045e59",
+        "MicrosoftAppType": "MultiTenant"
+        }
+    
+    }
+  
+    

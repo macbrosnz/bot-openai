@@ -2,19 +2,18 @@ import { ActivityHandler, CardFactory, MessageFactory, TurnContext } from "botbu
 import * as ACData from "adaptivecards-templating";
 import * as AnswerCard from "../cards/Answer.json";
 import * as WelcomeCard from "../cards/WelcomeCard.json";
-import { queryVectorStoreAgent } from "./summarizer";
-
+import { queryStoreAgent } from "./techsummarizer";
+import { queryVectorStore } from "./summarizer";
 
 export class OpenAiBot extends ActivityHandler {
   constructor() {
     super();
     
-
     this.onMessage(async (context, next) => {
       console.log('OpenAiBot constructor res:' + context.activity.text);
       const msg = context.activity.text
 
-      const answer = await queryVectorStoreAgent(msg, "kapae");
+      const answer = await queryVectorStore(msg, 'racism');
       //Create data for card
       const cardData = {
         answer: answer

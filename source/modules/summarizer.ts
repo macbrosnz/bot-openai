@@ -17,39 +17,10 @@ import { ChatOpenAI } from "langchain/chat_models/openai";
 import { HumanChatMessage } from "langchain/schema";
 
 
-const str = templates.qaTemplate
-console.log(templates.qaTemplate);
+const str = templates.huiTemplate
+console.log(templates.huiTemplate);
 
 
-const getStringsFromDocs = async(docs: any) => {
-  // Assuming results is an array of objects with a pageContent property
-  
-  const pageContents = [];
-  for (let i = 0; i < docs.length; i++) {
-    pageContents.push(docs[i].pageContent);
-    console.log(docs[i]);
-  }
-  let
-    uniqueArray = pageContents.
-      filter
-      (
-        (item, index) => {
-          return
-          pageContents.indexOf(item) === index;
-        });
-  return pageContents;
-// The pageContents array now contains all the pageContent values from the results array
-
-}
-
-const docstrings = async (docs: any) => {
-  const pageContents: string[] = docs.map((Document) => Document.pageContent);
-const concatenatedString: string = pageContents.join('');
-
-console.log(concatenatedString);
-  return concatenatedString;
-  
-}
 const uniquedocstrings = async (docs: any) => {
   const pageContents: string[] = docs.map((doc: any) => doc.pageContent);
 
@@ -64,34 +35,12 @@ const uniquedocstrings = async (docs: any) => {
 }
 
 
-const basicLLMQuery = async (msg: string): Promise<string> => {
-  try {
-    const model = new ChatOpenAI({
-      openAIApiKey: "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",
-      temperature: 1,
-
-    });
-
-    const res = await model.call([new HumanChatMessage(msg)]);
-    console.log(res);
-
-    return res.text
-
-  } catch (err) {
-    console.log(err);
-    return "failed"
-  }
-}
-export { basicLLMQuery };
-
-
-
-const queryVectorStoreAgent = async (msg: string, namespace: string,): Promise<string> => {
+const queryVectorStore = async (msg: string, namespace: string,): Promise<string> => {
 
   // Create a prompt template use to generate prompts for the summarization chain
   const chatPrompt = ChatPromptTemplate.fromPromptMessages([
-    SystemMessagePromptTemplate.fromTemplate(templates.inquiryTemplate),
-    HumanMessagePromptTemplate.fromTemplate(`{msg} `)
+    SystemMessagePromptTemplate.fromTemplate(templates.racism),
+    HumanMessagePromptTemplate.fromTemplate(`{msg} `),
   ])
 
   
@@ -112,10 +61,10 @@ const queryVectorStoreAgent = async (msg: string, namespace: string,): Promise<s
     const chatmodel = new OpenAIChat({
       modelName: process.env.OPENAI_CMODEL,
       openAIApiKey: "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",
-      temperature: .5,
+      temperature: 0.6,
     })
     const results = await vectorStore.similaritySearch(msg, 5);
-    const docstring = await docstrings(results);
+    const docstring = await uniquedocstrings(results);
     console.log('docs: ' + docstring);
 
     const chain = new LLMChain({
@@ -124,18 +73,16 @@ const queryVectorStoreAgent = async (msg: string, namespace: string,): Promise<s
     const res = await chain.call({
       msg: msg,
       summaries: docstring
-    }
-      
+    }   
     );
-
     console.log(res);
     return res.text;
   }
-
   catch (e) {
     console.log(e)
   }
 }
-export { queryVectorStoreAgent };
+export { queryVectorStore };
+
 
 
