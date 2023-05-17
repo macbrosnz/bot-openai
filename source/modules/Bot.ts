@@ -13,7 +13,7 @@ export class OpenAiBot extends ActivityHandler {
       console.log('OpenAiBot constructor res:' + context.activity.text);
       const msg = context.activity.text
 
-      const answer = await queryVectorStoreAgent(msg, "kapae");
+      const answer = await queryVectorStore(msg, "kapae");
       //Create data for card
       const cardData = {
         answer: answer
