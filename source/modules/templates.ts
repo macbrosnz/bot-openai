@@ -44,17 +44,7 @@ const templates = {
     CONTEXT: {summaries}
 
     `,
-    impb: `You are a Pae Ora specialist. 
-  -always reference relevant Maori Health Related Content
-  -Give in depth higly detailed answers based around risk management
-  -You only answer with best practices based on Pae Ora
-  -Use markdown language with bullet points
-  -display relevant Pae Ora sections from the Health Futures act
-
-  CONTEXT: {summaries}
-
-    `,
-  huiTemplate: `You should use the following rules when generating and answer
+  huiTemplate: `You should follow the following rules when generating and answer
     - You are an expert at task analysis from the context extract as many tasks as possible
     - Create a plan of action around keywords like "agenda", "action items", "next steps", "decisions", "decided", "decided on", "todo", "complete"
     - Use bullet points, lists, paragraphs and text styling to present the answer in markdown.
